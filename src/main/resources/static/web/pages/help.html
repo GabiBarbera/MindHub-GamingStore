@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../images/Well Played!.png" type="image/x-icon">
+    <link rel="stylesheet" href="../style/help.css">
+    <title>Location & Help</title>
+</head>
+
+<body>
+    <div id="app" class="header-section" v-cloak>
+        <header>
+            <div class="w-100 justify-content-start">
+                <img class="logoWell me-2" src="../images/Well_Played.png" alt="">
+            </div>
+            <nav class="navbar navbar-expand-lg text-center text-white d-flex w-100 justify-content-end">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon text-white"></span>
+                </button>
+                <div class="collapse navbar-collapse w-100 justify-content-end gap-5 me-5 align-items-center p-3"
+                    id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto ulNav align-items-end">
+                        <div v-if="isLoggedIn">
+                            <p class="fs-4 m-0" id="userName">{{ client.firstName }} {{
+                                client.lastName }}</p>
+                        </div>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../index.html">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Products
+                            </a>
+                            <ul class="dropdown-menu dropMenu">
+                                <div class="d-flex flex-column">
+                                    <li><a class="dropdown-item aDrop" href="./products.html">All products <i
+                                                class="bi bi-pc-display fs-2"></i></a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item aDrop" href="#">Headphones <i
+                                                class="bi bi-mouse3 fs-2"></i></a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+
+                                    </li>
+                                    <li><a class="dropdown-item aDrop" href="#">Microphone <i
+                                                class="bi bi-keyboard fs-2"></i></a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item aDrop" href="#">Keyboards <i
+                                                class="bi bi-mic fs-2"></i></a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item aDrop" href="#">Mouse <i
+                                                class="bi bi-headset fs-2"></i></a></li>
+                                </div>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="./help.html">Help Center</a>
+                        </li>
+                        <div v-if="isLoggedIn">
+                            <button class="buttonSession">
+                                <a href="#" @click.prevent="logout" class="logIn">Log Out</a>
+                            </button>
+                        </div>
+                        <div v-else>
+                            <button class="buttonSession">
+                                <a href="./logIn.html" class="logIn">{{buttonText}}</a>
+                            </button>
+                        </div>
+                    </ul>
+            </nav>
+            <section class="banner">
+                <div class="content-banner">
+                </div>
+            </section>
+        </header>
+        <main class="flex-grow-1 w-100">
+            <h1 class="ms-4">Support/Contact</h1>
+            <div class="d-flex pt-5 container-fluid justify-content-between flex-wrap">
+                <div class="h3h4 ms-4 mt-5">
+                    <h3>Customer Care <i class="bi bi-people"></i></h3>
+                    <h4>Questions or problems with an order? Please call us during business hours for an
+                        immediate
+                        response.</h4>
+                </div>
+                <div class="h3h4 mt-5">
+                    <h3>Technical Care <i class="bi bi-tools"></i></h3>
+                    <h4>Need assistance with a product you own? Chat with one of our experts to troubleshoot your
+                        issues.</h4>
+                </div>
+            </div>
+            <div class="d-flex m-5 flex-wrap" data-aos="flip-left" data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000">
+                <div class="d-flex align-items-center flex-column container ms-5 w-50">
+                    <form class="form">
+                        <label>
+                            <input required="" type="text" placeholder="" class="input">
+                            <span>Country</span>
+                        </label>
+
+                        <label>
+                            <input required="" type="text" placeholder="" class="input">
+                            <span>City</span>
+                        </label>
+
+                        <div class="flex">
+                            <label>
+                                <input required="" placeholder="" type="text" class="input">
+                                <span>First name</span>
+                            </label>
+
+                            <label>
+                                <input required="" placeholder="" type="text" class="input">
+                                <span>Last name</span>
+                            </label>
+                        </div>
+
+                        <label>
+                            <input required="" placeholder="" type="email" class="input">
+                            <span>Email</span>
+                        </label>
+
+                        <label>
+                            <textarea required="" rows="3" placeholder="" class="input01"></textarea>
+                            <span>Reason why you need to contact us</span>
+                        </label>
+
+                        <button class="fancy" href="#">
+                            <span class="top-key"></span>
+                            <span class="text">Submit</span>
+                            <span class="bottom-key-1"></span>
+                            <span class="bottom-key-2"></span>
+                        </button>
+                    </form>
+                </div>
+                <div class="w-25 container">
+                    <div class="border border-1 p-3 m-2 mapsSection">
+                        <h5>Call Customer Service <i class="bi bi-telephone-outbound fs-4"></i></h5>
+                        <h6>If you have an urgent request regarding an order, please call us during business hours for
+                            an
+                            immediate response.</h6>
+                        <p>Monday-Friday 7 a.m.-5 p.m. PT</p>
+                        <a href="tel:+1139145523" class="text-decoration-none text-black fw-bolder">1139145523</a>
+                    </div>
+                    <div class="border border-1 p-2 m-2 mapsSection">
+                        <h5>Call Technical Support <i class="bi bi-telephone-outbound fs-4"></i></h5>
+                        <h6>Questions about a product you already own? Ask a expert.</h6>
+                        <p>Monday-Friday 6 a.m.-6 p.m. PT</p>
+                        <a href="tel:+1139145523" class="text-decoration-none text-black fw-bolder">1139145523</a>
+                    </div>
+                </div>
+            </div>
+            <section class="news d-flex">
+                <div class="container d-flex align-items-center gap-5">
+                    <div>
+                        <p class="fs-4"> What sets us apart is our commitment to quality and innovation. We work closely
+                            with the
+                            industry's
+                            leading brands to ensure you have access to high-performance equipment that allows you to
+                            fully
+                            immerse
+                            yourself in your favorite games.</p>
+                    </div>
+                    <div>
+                        <p class="fs-4"> Our staff is made up of passionate gamers who know the products firsthand and
+                            are
+                            ready to
+                            provide
+                            you
+                            with expert advice and personalized recommendations. Whether you're looking to improve your
+                            current
+                            setup or building one from scratch, we're here to help you achieve your gaming goals.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="m-5">
+                <h2 class="mb-5 w-75 historyMap">Where do we meet? And a little of our history...</h2>
+                <div class="d-flex gap-5 justify-content-center flex-wrap border pb-5 m-5 mapsSection"
+                    data-aos="zoom-in-left">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13117.503727034342!2d-58.29185515!3d-34.72091734999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a32df179f1517b%3A0x492f0e4784686f6d!2sComodoro%20Rivadavia%2C%20Bernal%20Oeste%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1696199543357!5m2!1ses!2sar"
+                        width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade" class="rounded mt-5"></iframe>
+                    <h5 class="w-50 d-flex align-items-center mt-5">On a quiet street, a group of gamer friends finally
+                        fulfilled their dream: they opened their first gamer store. With neon lights shining,
+                        next-generation consoles and retro games, the place
+                        became a paradise for video game lovers. The opening was a success, and the store was filled
+                        with
+                        excitement and laughter. Since then, it became the meeting point of the local gaming community,
+                        where
+                        friendships were forged in virtual battles and gamers' dreams came true.</h5>
+                </div>
+                <div class="d-flex gap-5 justify-content-center flex-wrap border pb-5 m-5 mapsSection"
+                    data-aos="zoom-in-right">
+                    <h5 class="w-50 d-flex align-items-center mt-5">In their quest to expand their gaming kingdom, the
+                        team decided to open their second location. The excitement was palpable as they prepared the new
+                        space with state-of-the-art equipment and impressive decor. When they finally opened the doors,
+                        the gaming community welcomed them with open arms. This second location became the ideal place
+                        for local tournaments and competitions, where the passion for video games was lived to the
+                        fullest. The expansion was a success and showed that the gaming world continued to grow
+                        strongly.</h5>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5380.526399280089!2d-58.31346257505891!3d-34.700316042627996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sar!4v1696202173926!5m2!1ses!2sar"
+                        width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade" class="rounded mt-5"></iframe>
+                </div>
+                <div class="d-flex gap-5 justify-content-center flex-wrap border pb-5 m-5 mapsSection"
+                    data-aos="zoom-in-left">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7393.471076933806!2d-58.40414834957048!3d-34.60359682703549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sar!4v1696202299158!5m2!1ses!2sar"
+                        width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade" class="rounded mt-5"></iframe>
+                    <h5 class="w-50 d-flex align-items-center mt-5">The gamer team was not satisfied with two stores and
+                        decided to open its third store. This time, they chose a strategic location in the heart of the
+                        city. The opening was an epic event with live broadcasts, cosplayers and gifts for the first
+                        customers. The third location became a meeting point for players of all ages, offering a unique
+                        experience with its high-quality products and a friendly atmosphere. The expansion of the gamer
+                        store continued its successful course, conquering new video game fans.</h5>
+                </div>
+            </section>
+        </main>
+        <footer class="footer w-100 mt-5">
+            <div class="row d-flex justify-content-evenly">
+                <div class="col-md-4 ms-5">
+                    <h3>Contact Us</h3>
+                    <p>If you have any questions or need assistance, feel free to reach out to us.</p>
+                </div>
+                <div class="col-md-4 ps-5">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="./products.html">Products</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 followUs">
+                    <h3>Follow Us</h3>
+                    <ul class="social-icons">
+                        <li><a href="#"><i class="bi bi-facebook"></i></a></li>
+                        <li><a href="#"><i class="bi bi-twitter"></i></a></li>
+                        <li><a href="#"><i class="bi bi-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <img class="logoWellFooter" src="../images/Well_Played.png" alt="">
+            </div>
+            <div class="footer-bottom pt-5">
+                <p>&copy; 2023 Gaming Store. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../scripts/help.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>

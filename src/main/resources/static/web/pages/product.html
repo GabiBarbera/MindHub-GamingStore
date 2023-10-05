@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../images/Well Played!.png" type="image/x-icon">
+    <link rel="stylesheet" href="../style/product.css">
+    <title>Product Overview</title>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="header-section pb-5">
+            <header>
+                <a href="./cart.html">
+                    <div class="container-icon">
+                        <div class="container-cart-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="icon-cart">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+                            <div class="count-products">
+                                <span class="contador-productos">{{carrito.length}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <div class="w-100 justify-content-start">
+                    <img class="logoWell me-2" src="../images/Well_Played.png" alt="">
+                </div>
+                <nav class="navbar navbar-expand-lg text-center text-white d-flex w-100 justify-content-end">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon text-white"></span>
+                    </button>
+                    <div class="collapse navbar-collapse w-100 justify-content-end gap-5 me-5 align-items-center p-3"
+                        id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto ulNav align-items-end">
+                            <li class="nav-item">
+                                <a class="nav-link" href="../../index.html">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Products
+                                </a>
+                                <ul class="dropdown-menu dropMenu">
+                                    <div class="d-flex flex-column">
+                                        <li><a class="dropdown-item aDrop" href="./products.html">All products <i
+                                                    class="bi bi-pc-display fs-2"></i></a>
+                                        </li>
+                                        <hr class="dropdown-divider">
+                                        <li><a class="dropdown-item aDrop"
+                                                :href="'./products.html?parameter=Headphone'">Headphones <i
+                                                    class="bi bi-mouse3 fs-2"></i></a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item aDrop"
+                                                v-bind:href="'./products.html?parameter=Microphone'">Microphone <i
+                                                    class="bi bi-keyboard fs-2"></i></a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item aDrop"
+                                                v-bind:href="'./products.html?parameter=Keyboard'">Keyboards <i
+                                                    class="bi bi-mic fs-2"></i></a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item aDrop"
+                                                v-bind:href="'./products.html?parameter=Mouse'">Mouse <i
+                                                    class="bi bi-headset fs-2"></i></a></li>
+                                    </div>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./help.html">Help Center</a>
+                            </li>
+                            <div v-if="isLoggedIn">
+                                <button class="buttonSession">
+                                    <a href="#" @click.prevent="logout" class="logIn">Log Out</a>
+                                </button>
+                            </div>
+                            <div v-else>
+                                <button class="buttonSession">
+                                    <a href="./logIn.html" class="logIn">{{buttonText}}</a>
+                                </button>
+                            </div>
+                        </ul>
+                </nav>
+                <section class="banner">
+                    <div class="content-banner">
+                    </div>
+                </section>
+            </header>
+        </div>
+        <main>
+            <div class=" container d-flex flex-column flex-md-row align-items-center mt-5" id="mainContainer">
+                <template v-for="product of product">
+                    <div
+                        class="d-flex mainPicContainer gap-3 flex-column col-12 col-md-6 align-items-center justify-content-center">
+                        <img id="featured" v-bind:src="product.photos[0]" v-model="mainPhoto" class="d-flex">
+                        <div id="slideWrapper" class="d-flex ms-3">
+                            <svg @click="moveLeft" id="arrowLeft" class="arrow" role="button"
+                                xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 448 512">
+                                <path
+                                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                            </svg>
+                            <div id="slider">
+                                <template v-for="photo of product.photos">
+                                    <img v-if="photo == mainPhoto" @click="changePhoto" class="thumbnail active"
+                                        v-bind:src="photo">
+                                    <img v-else class="thumbnail" @click="changePhoto" v-bind:src="photo">
+                                </template>
+                            </div>
+                            <svg @click="moveRight" id="arrowRight" class="arrow" role="button"
+                                xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                                <path
+                                    d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="descriptionContainer d-flex flex-column col-12 col-md-6 ">
+                        <h2 class="mb-5">{{product.name}}</h2 <ul class="gap-2">
+                        <template v-for="snapshot of product.snapshot">
+                            <li class="
+                            fw-bolder mb-2 fs-5"><small>{{snapshot}}</small></li>
+                        </template>
+                        </ul>
+                        <p class="ms-3 fw-bold fs-4">Price: <span class="fw-bolder">&#160 $
+                                {{product.price}}</span></p>
+                        <div class="d-flex ">
+                            <p class="ms-3 me-3 fw-bold fs-4">Select Color:&#160 &#160 &#160
+                                <template v-for="color of product.colors">
+                                    <label class="btn me-1  buttonColor" v-bind:class="color"
+                                        v-bind:for="product.color">{{color}}
+                                        <input type="radio" v-model="colorChosen" v-bind:class="color" name="options"
+                                            v-bind:for="product.color" v-bind:value="color">
+                                    </label>
+                                </template>
+                            </p>
+                        </div>
+                        <div class="btn-add-cart">
+                            <template v-if="carrito.some((item) => item.id == product.id)">
+                                <p class="m-0 fw-semibold text-success">In cart</p>
+                            </template>
+                            <button v-else class="button-categories me-1" @click="addCart(product)">
+                                <span class="span-categories">Add to cart</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+
+            </div>
+            <section class="d-flex flex-column mt-5">
+                <h2 class="mb-1 text-center">Product description</h2>
+                <div class="d-flex flex-column justify-content-center align-items-center flex-md-row mt-1">
+                    <div class="col-10 col-md-6 d-flex align-items-center justify-content-center">
+                        <template v-for="product of product">
+                            <p id="descriptionP">{{product.description}}</p>
+                        </template>
+                    </div>
+                    <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+                        <template v-for="product of product">
+                            <img id="descriptionImage" v-bind:src="product.photos[1]" alt="">
+                        </template>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="footer w-100 mt-5">
+            <div class="row d-flex justify-content-evenly">
+                <div class="col-md-4 ms-5">
+                    <h3>Contact Us</h3>
+                    <p>If you have any questions or need assistance, feel free to reach out to us.</p>
+                </div>
+                <div class="col-md-4 ps-5">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="./products.html">Products</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 followUs">
+                    <h3>Follow Us</h3>
+                    <ul class="social-icons">
+                        <li><a href="#"><i class="bi bi-facebook"></i></a></li>
+                        <li><a href="#"><i class="bi bi-twitter"></i></a></li>
+                        <li><a href="#"><i class="bi bi-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <img class="logoWellFooter" src="../images/Well_Played.png" alt="">
+            </div>
+            <div class="footer-bottom pt-5">
+                <p>&copy; 2023 Gaming Store. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+    <script src="../scripts/product.js"></script>
+</body>
+
+</html>

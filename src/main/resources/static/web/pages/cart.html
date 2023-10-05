@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../images/Well_Played.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Gaming-Store | Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../style/cart.css">
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <header>
+            <div class="w-100 justify-content-start">
+                <img class="logoWell me-2" src="../images/Well_Played.png" alt="">
+            </div>
+            <nav class="navbar navbar-expand-lg text-center text-white d-flex w-100 justify-content-end">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon text-white"></span>
+                </button>
+                <div class="collapse navbar-collapse w-100 justify-content-end gap-5 me-5 align-items-center p-3"
+                    id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto ulNav align-items-end">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../index.html">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Products
+                            </a>
+                            <ul class="dropdown-menu dropMenu">
+                                <div class="d-flex flex-column">
+                                    <li><a class="dropdown-item aDrop" href="./products.html">All products <i
+                                                class="bi bi-pc-display fs-2"></i></a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item aDrop" href="#">Headphones <i
+                                                class="bi bi-mouse3 fs-2"></i></a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item aDrop" href="#">Microphone <i
+                                                class="bi bi-keyboard fs-2"></i></a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item aDrop" href="#">Keyboards <i
+                                                class="bi bi-mic fs-2"></i></a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item aDrop" href="#">Mouse <i
+                                                class="bi bi-headset fs-2"></i></a></li>
+                                </div>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./help.html">Help Center</a>
+                        </li>
+                        <div v-if="isLoggedIn">
+                            <button class="buttonSession">
+                                <a href="#" @click.prevent="logout" class="logIn">Log Out</a>
+                            </button>
+                        </div>
+                        <div v-else>
+                            <button class="buttonSession">
+                                <a href="./logIn.html" class="logIn">{{buttonText}}</a>
+                            </button>
+                        </div>
+                    </ul>
+            </nav>
+            <section class="banner">
+                <div class="content-banner">
+                </div>
+            </section>
+        </header>
+        <main class="main-cart flex-grow-1 w-100">
+            <section class="myCart">
+                <button class="btn-cart btn-removeAll" @click="emptyCart">remove all products <i
+                        class="bi bi-trash3-fill"></i></button>
+                <template v-if="localStorage.length > 0" v-for="(product,index) of localStorage">
+                    <section class="product-card">
+                        <img :src="product.photos" class="img-product" alt="">
+                        <h4 class="text-center p-2 w-50 me-2">{{product.name}}</h4>
+                        <div class="btns-cart">
+                            <button class="btn-cart" @click="removeOneItem(index)"><i
+                                    class="bi bi-cart-dash"></i></button>
+                            <p class="fw-bold mt-4 fs-4">{{product.qty}}</p>
+                            <button class="btn-cart" @click="plusItem(product)"><i class="bi bi-cart-plus"></i></button>
+                        </div>
+                        <span class="price">${{(product.price * product.qty).toFixed(2)}}</span>
+                    </section>
+                </template>
+                <div class="w-100 d-flex flex-column justify-content-center align-items-center" v-else>
+                    <h1 class="m-0">Your cart is empty</h1>
+                    <img class="emptyCart" src="../images/Firmware-amico.svg" alt="">
+                </div>
+                <!-- {{changeStorage}} -->
+            </section>
+            <div class="container-payments-summary d-flex justify-content-center">
+                <!-- <section class="payments">
+                    <h4 class="text-center">Select the payment method <i class="bi bi-credit-card"></i></h4>
+                    <div class="radio-buttons-container">
+                        <div class="radio-button">
+                            <input name="radio-group" id="radio2" class="radio-button__input" type="radio" disabled>
+                            <label for="radio2" class="radio-button__label">
+                                <span class="radio-button__custom"></span>
+                                CASH / BANK TRANSFER
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input name="radio-group" id="radio1" class="radio-button__input" type="radio">
+                            <label for="radio1" class="radio-button__label">
+                                <span class="radio-button__custom"></span>
+                                VIRTUAL CARD OR WALLET
+                            </label>
+                        </div>
+                    </div>
+                </section> -->
+                <section class="summary">
+                    <h4 class="text-center mb-4">Summary of your purchase <i class="bi bi-1 bi-cart2"></i></h4>
+                    <div class="finaly">
+                        <p class="w-50 text-secondary fw-bold fs-6"><span>Subtotal</span></p>
+                        <p class="w-50 text-end text-secondary fw-bold fs-6"><span>${{subtotalPrice.toFixed(2)}}</span>
+                        </p>
+                    </div>
+                    {{subTotalCombined}}
+                    <div class="finaly">
+                        <p class="w-50 text-secondary fw-bold fs-6"><span>IVA</span></p>
+                        <p class="w-50 text-end text-secondary fw-bold fs-6"><span>21%</span></p>
+                    </div>
+                    <div class="finaly">
+                        <p class="w-50 fw-bold fs-4"><span>Total</span></p>
+                        <p class="w-50 text-end fw-bold fs-4"><span>${{total.toFixed(2)}}</span></p>
+                    </div>
+                    {{totalClaculated}}
+                    <a class="a-cart" v-if="isLoggedIn" href="./checkout.html"><button class="btn-finalize">FINALIZE
+                            PURCHASE</button></a>
+                    <a class="a-cart" v-else href="./logIn.html"><button class="btn-finalize">LOG IN</button></a>
+                </section>
+            </div>
+        </main>
+        <footer class="footer w-100 mt-5">
+            <div class="row d-flex justify-content-evenly">
+                <div class="col-md-4 ms-5">
+                    <h3>Contact Us</h3>
+                    <p>If you have any questions or need assistance, feel free to reach out to us.</p>
+                </div>
+                <div class="col-md-4 ps-5">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="./products.html">Products</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 followUs">
+                    <h3>Follow Us</h3>
+                    <ul class="social-icons">
+                        <li><a href="#"><i class="bi bi-facebook"></i></a></li>
+                        <li><a href="#"><i class="bi bi-twitter"></i></a></li>
+                        <li><a href="#"><i class="bi bi-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <img class="logoWellFooter" src="../images/Well_Played.png" alt="">
+            </div>
+            <div class="footer-bottom pt-5">
+                <p>&copy; 2023 Gaming Store. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../scripts/cart.js"></script>
+</body>
+
+</html>

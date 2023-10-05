@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="home page">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="shortcut icon" href="./web/images/Well_Played.png" type="image/x-icon">
+    <link rel="stylesheet" href="web/style/index.css">
+</head>
+
+<body>
+    <div class="layout" id="app" v-cloak>
+        <div class="header-section">
+            <a href="./web/pages/cart.html">
+                <div class="container-icon">
+                    <div class="container-cart-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="icon-cart">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
+                        <div class="count-products">
+                            <span class="contador-productos">{{carrito.length}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <header>
+                <div class="w-100 justify-content-start">
+                    <img class="logoWell me-2" src="./web/images/Well_Played.png" alt="">
+                </div>
+                <nav class="navbar navbar-expand-lg text-center text-white d-flex w-100 justify-content-end">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon text-white"></span>
+                    </button>
+                    <div class="collapse navbar-collapse w-100 justify-content-end gap-5 me-5 align-items-center p-3"
+                        id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto ulNav align-items-end">
+                            <div v-if="isLoggedIn">
+                                <p class="fs-4 m-0" id="userName">{{ client.firstName }} {{
+                                    client.lastName }}</p>
+                            </div>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Products
+                                </a>
+                                <ul class="dropdown-menu dropMenu">
+                                    <div class="d-flex flex-column">
+                                        <li><a class="dropdown-item aDrop" href="./web/pages/products.html">All products
+                                                <i class="bi bi-pc-display fs-2"></i></a>
+                                        </li>
+                                        <hr class="dropdown-divider">
+                                        <li><a class="dropdown-item aDrop"
+                                                :href="'./products.html?parameter=Headphone'">Headphones <i
+                                                    class="bi bi-mouse3 fs-2"></i></a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item aDrop"
+                                                v-bind:href="'./products.html?parameter=Microphone'">Microphone <i
+                                                    class="bi bi-keyboard fs-2"></i></a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item aDrop"
+                                                v-bind:href="'./products.html?parameter=Keyboard'">Keyboards <i
+                                                    class="bi bi-mic fs-2"></i></a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item aDrop"
+                                                v-bind:href="'./products.html?parameter=Mouse'">Mouse <i
+                                                    class="bi bi-headset fs-2"></i></a></li>
+                                    </div>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./web/pages/help.html">Help Center</a>
+                            </li>
+                            <div v-if="isLoggedIn">
+                                <button class="buttonSession">
+                                    <a href="#" @click.prevent="logout" class="logIn">Log Out</a>
+                                </button>
+                            </div>
+                            <div v-else>
+                                <button class="buttonSession">
+                                    <a href="./web/pages/logIn.html" class="logIn">{{buttonText}}</a>
+                                </button>
+                            </div>
+                        </ul>
+                </nav>
+            </header>
+        </div>
+        <main class="flex-grow-1 w-100">
+            <section class="banner">
+                <div class="content-banner">
+                    <h2> Well played!<br />PC components</h2>
+                    <p>Playing well is buying your PC components <br>
+                        from a trusted website.</p>
+                    <button class="button-banner">
+                        See more
+                        <div class="hoverEffect">
+                            <div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </section>
+
+            <!--categorias-->
+            <section class="container top-categories">
+                <h2 class="title-categories">Main Categories</h2>
+                <div class="container-categories">
+                    <div class="card-category category-keyboard" data-aos="flip-up" data-aos-easing="ease-out-cubic"
+                        data-aos-duration="2000">
+                        <p>Keyboard Gamer</p>
+                        <span>See more</span>
+                    </div>
+                    <div class="card-category category-mouse" data-aos="flip-down" data-aos-easing="ease-out-cubic"
+                        data-aos-duration="2000">
+                        <p>Mouse Gamer</p>
+                        <span>See more</span>
+                    </div>
+                    <div class="card-category category-headset" data-aos="flip-up" data-aos-easing="ease-out-cubic"
+                        data-aos-duration="2000">
+                        <p>Headsets gamer</p>
+                        <span>See more</span>
+                    </div>
+                </div>
+            </section>
+
+            <!--Productos mas solicitados-->
+            <h2 class="title-categories">Most featured products</h2>
+            <div class="wrapper container d-flex justify-content-center ">
+                <i id="left" class="fa-solid fa-angle-left "><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                    </svg></i>
+                <div class="carousel">
+                    <img src="web/images/hyperx_quadcast_s_white_1_main.png" alt="img" draggable="false">
+                    <img src="web/images/PELOPS-cta.png" alt="img" draggable="false">
+                    <img src="web/images/storm-pro-png.png" alt="img" draggable="false">
+                    <img src="web/images/ire-848-blue.png" alt="img" draggable="false">
+                    <img src="web/images/SHRAPNEL.png" alt="img" draggable="false">
+
+                </div>
+                <i id="right" class="fa-solid fa-angle-right"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                    </svg></i>
+            </div>
+            <!--garanty-->
+            <section class="container container-features" data-aos="flip-left" data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000">
+                <div class="card-feature p-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
+                        <path
+                            d="M192 93.7C192 59.5 221 0 256 0c36 0 64 59.5 64 93.7l0 66.3L497.8 278.5c8.9 5.9 14.2 15.9 14.2 26.6v56.7c0 10.9-10.7 18.6-21.1 15.2L320 320v80l57.6 43.2c4 3 6.4 7.8 6.4 12.8v42c0 7.8-6.3 14-14 14c-1.3 0-2.6-.2-3.9-.5L256 480 145.9 511.5c-1.3 .4-2.6 .5-3.9 .5c-7.8 0-14-6.3-14-14V456c0-5 2.4-9.8 6.4-12.8L192 400V320L21.1 377C10.7 380.4 0 372.7 0 361.8V305.1c0-10.7 5.3-20.7 14.2-26.6L192 160V93.7z" />
+                    </svg>
+                    <div class="feature-content">
+                        <span>Free worldwide delivery</span>
+                        <p>On orders over $150</p>
+                    </div>
+                </div>
+                <div class="card-feature p-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
+                        <path
+                            d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V192c0-35.3-28.7-64-64-64H80c-8.8 0-16-7.2-16-16s7.2-16 16-16H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H64zM416 272a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                    </svg>
+                    <div class="feature-content">
+                        <span>Cash on delivery</span>
+                        <p>100% money back guarantee</p>
+                    </div>
+                </div>
+                <div class="card-feature p-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
+                        <path
+                            d="M190.5 68.8L225.3 128H224 152c-22.1 0-40-17.9-40-40s17.9-40 40-40h2.2c14.9 0 28.8 7.9 36.3 20.8zM64 88c0 14.4 3.5 28 9.6 40H32c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32H480c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32H438.4c6.1-12 9.6-25.6 9.6-40c0-48.6-39.4-88-88-88h-2.2c-31.9 0-61.5 16.9-77.7 44.4L256 85.5l-24.1-41C215.7 16.9 186.1 0 154.2 0H152C103.4 0 64 39.4 64 88zm336 0c0 22.1-17.9 40-40 40H288h-1.3l34.8-59.2C329.1 55.9 342.9 48 357.8 48H360c22.1 0 40 17.9 40 40zM32 288V464c0 26.5 21.5 48 48 48H224V288H32zM288 512H432c26.5 0 48-21.5 48-48V288H288V512z" />
+                    </svg>
+                    <div class="feature-content">
+                        <span>Special gift card</span>
+                        <p>Offer special gift bonuses</p>
+                    </div>
+                </div>
+                <div class="card-feature p-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
+                        <path
+                            d="M256 48C141.1 48 48 141.1 48 256v40c0 13.3-10.7 24-24 24s-24-10.7-24-24V256C0 114.6 114.6 0 256 0S512 114.6 512 256V400.1c0 48.6-39.4 88-88.1 88L313.6 488c-8.3 14.3-23.8 24-41.6 24H240c-26.5 0-48-21.5-48-48s21.5-48 48-48h32c17.8 0 33.3 9.7 41.6 24l110.4 .1c22.1 0 40-17.9 40-40V256c0-114.9-93.1-208-208-208zM144 208h16c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H144c-35.3 0-64-28.7-64-64V272c0-35.3 28.7-64 64-64zm224 0c35.3 0 64 28.7 64 64v48c0 35.3-28.7 64-64 64H352c-17.7 0-32-14.3-32-32V240c0-17.7 14.3-32 32-32h16z" />
+                    </svg>
+                    <div class="feature-content">
+                        <span>24/7 customer service</span>
+                        <p>Call us 24/7 at 1234-567</p>
+                    </div>
+                </div>
+            </section>
+            <!--galery-->
+            <div class="container">
+                <h2 class="title-categories">Best selling product</h2>
+                <div class="product">
+                    <section class="headsets">
+                        <h2>GAMING <span class="span-headsets">HEADSETS </span></h2>
+                        <p class="text">The HyperX Cloud III Wireless is a new chapter in the legend of the Cloud II.
+                            This wireless evolution builds upon the soul of the Cloud II Wireless while incorporating
+                            new tech and a bold new look. Comfort is king and the Cloud III’s fit for royalty,
+                            delivering luxurious comfort for all-day gaming or marathon streams. You’ll get a huge
+                            amount of battery life, up to 120 hours, for uninterrupted gaming joy. </p>
+                        <button class="button-categories me-4">
+                            <span class="span-categories">Continue</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                            </svg>
+                        </button>
+                    </section>
+                    <div class="img-container">
+                        <img id="imageBox" src="web/images/hyperx_cloud_stinger_2_core_white_ps_1_main_large.png"
+                            alt="">
+                    </div>
+                    <div class="product-small-img">
+                        <img src="web/images/hyperx_cloud_blue_1_main_renamed_5_large.png" alt=""
+                            onclick="myFunction(this)">
+                        <img src="web/images/hyperx_cloud_ii_red_1_main_large.png" alt="" onclick="myFunction(this)">
+                        <img src="web/images/hyperx_cloudx_stinger_2_core_white_xbox_1_main_large.png" alt=""
+                            onclick="myFunction(this)">
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                function myFunction(smallImg) {
+                    let fullImg = document.getElementById("imageBox");
+                    fullImg.src = smallImg.src;
+                }
+            </script>
+            <!-- imagenes con texto-->
+            <div class="container-img-text d-flex justify-content-around container-fluid gap-3 ms-2 flex-wrap"
+                data-aos="zoom-in">
+                <img class="imagen-text" src="web/images/HyperX_Armada_25_homepage_hero_mobile_720x720_1_720x (1).jpeg"
+                    alt="">
+                <section class="headsets2">
+                    <h2 class="text-center">Streamers Collection</span></h2>
+                    <p class="text">From gaming microphones with stunning RGB, to gaming monitors optimized for
+                        streaming, HyperX has everything you need for streaming and content creation.</p>
+                    <button class="button-categories2">
+                        <span class="span-categories">Continue</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg>
+                    </button>
+                </section>
+            </div>
+            <div class="container-img-text d-flex justify-content-around container-fluid gap-3 flex-wrap"
+                data-aos="fade-up" data-aos-duration="2000">
+                <section class="headsets2">
+                    <h2 class="text-center">¡Cheap gaming peripherals!</h2>
+                    <p class="text">Do you love playing video games, but don't want to spend a lot of money on
+                        peripherals? Don't worry, we have what you need! On our website you will find a wide selection
+                        of cheap gaming peripherals, with the best quality and performance.</p>
+                    <button class="button-categories2">
+                        <span class="span-categories">Continue</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg>
+                    </button>
+                </section>
+                <img class="imagen-text" src="./web/images/razer-insider.jpeg" alt="">
+            </div>
+            <!--galeria de imagenes 2 -->
+            <!-- <div class="container galery">
+                <h2 class="title-categories">We're All Gamers </h2>
+                <div class="galeria">
+                    <img src="./assets/images/draconic.jpeg" alt="">
+                    <img src="./assets/images/maxresdefault.jpeg" alt="">
+                    <img src="./assets/images/portada-guia-portatil-MSI.jpeg" alt="">
+                    <img src="./assets/images/florian-olivo-Mf23RF8xArY-unsplash.jpg" alt="">
+                    <img src="./assets/images/ella-don-5hWLJflGLHE-unsplash.jpg" alt="">
+                    <img src="./assets/images/ella-don-oPrXf-0Nf9Q-unsplash.jpg" alt="">
+                  </div>
+            </div> -->
+        </main>
+        <footer class="footer w-100 mt-5">
+            <div class="row d-flex justify-content-evenly">
+                <div class="col-md-4 ms-5">
+                    <h3>Contact Us</h3>
+                    <p>If you have any questions or need assistance, feel free to reach out to us.</p>
+                </div>
+                <div class="col-md-4 ps-5">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="./products.html">Products</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 followUs">
+                    <h3>Follow Us</h3>
+                    <ul class="social-icons">
+                        <li><a href="#"><i class="bi bi-facebook"></i></a></li>
+                        <li><a href="#"><i class="bi bi-twitter"></i></a></li>
+                        <li><a href="#"><i class="bi bi-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <img class="logoWellFooter" src="./web/images/Well_Played.png" alt="">
+            </div>
+            <div class="footer-bottom pt-5">
+                <p>&copy; 2023 Gaming Store. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+    <script src="web/scripts/index.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
